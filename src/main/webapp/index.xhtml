@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<title>Gestion des Etudiants</title>
+	<link href="style.css" rel="stylesheet" />
+</h:head>
+<h:body>
+	<div>
+		<h1>Listes des étudiants</h1>
+		<h:form>
+		<p:dataTable value="#{etudiantEJB.butEtudiant}" var="e"
+		styleClass="table table-hover table-red"
+		style="width:708; margin:auto;">
+			<p:column>
+				<f:facet name="header">ID</f:facet>
+			#{e.id}
+		</p:column>
+			<p:column>
+				<f:facet name="header">Nom</f:facet>
+			#{e.nom}
+		</p:column>
+			<p:column>
+				<f:facet name="header">Prénom</f:facet>
+			#{e.prenom}
+		</p:column>
+			<p:column>
+				<f:facet name="header">Date de Naissance</f:facet>
+			#{e.datenaiss}
+		</p:column>
+		
+			<p:column colspan="2">
+				 <f:facet name="header">Opération</f:facet>
+				 <div class="row box-space-top">
+				 <h:panelGroup styleClass="label">
+					<h:commandLink action="#{etudiantEJB.deleteEtudiant(e)}" value="Supprimer" onclick="return confirm('Voulez-vous supprimer l etudiant');"/>
+				 </h:panelGroup><br />
+				 <h:panelGroup styleClass="field">
+				 	<h:commandLink action="#{etudiantEJB.affiche(e)}" value="Modifier" />
+				 </h:panelGroup>
+				 </div>
+				 </p:column>
+				 </p:dataTable>		
+	</h:form>
+	<div class="#{etudiantEJB.modif ? 'hide' : 'show'}">
+	<!--  <div class="#{etudiantEJB.modif?'cache':'null'}">-->	
+	<h1>Créer un Etudiant</h1>
+	<h:form>
+		<h:panelGrid columns="2" cellpadding="3">
+		
+			<h:message for="username1"/><br/>
+			<p:outputLabel for="username1" styleClass="block">Nom</p:outputLabel>
+			<p:inputText id="username1" styleClass="block" value="#{etudiantEJB.etudiant.nom}" a:placeholder="Votre Nom: "
+			validatorMessage="Entrez votre nom" rendered="true"/>
+				
+			<h:message for="username2"/><br/>-
+			<p:outputLabel for="username2" styleClass="block">Prenom</p:outputLabel>
+			<p:inputText id="username2" styleClass="block" value="#{etudiantEJB.etudiant.prenom}" a:placeholder="Votre Prénom: "
+			validatorMessage="Entrez votre Prenom" required="true"/>
+			
+			<h:message for="dateNais"/><br/>
+			<p:outputLabel for="dateNais" styleClass="block">Date de Naissance</p:outputLabel>
+			
+			<p:calendar id="dateNais" value="#{etudiantEJB.date}" required="true" a:placeholder="Votre date de naissance"
+			pattern="yyyy-MM-dd" mode="popup" showOn="button" validatorMessage="Entrez votre date de naissance">
+			
+			</p:calendar>
+			<h:commandButton action="#{etudiantEJB.ajoutEtudiant()}" value="Ajouter un étudiant" />
+		
+		</h:panelGrid>
+		<br/>
+	</h:form>
+	</div>
+	<!--<div class="#{etudiantEJB.modif?'null':'cache'}">-->
+	<div class="#{etudiantEJB.modif ? 'show' : 'hide'}">	
+	<h:form rendered="#{etudiantEJB.modif}">
+	<h1>Editer un Etudiant</h1>
+		<h:panelGrid columns="2" cellpadding="3">
+		
+			<h:message for="username1"/><br/>
+			<p:outputLabel for="username1" styleClass="block">Nom</p:outputLabel>
+			<p:inputText id="username1" styleClass="block" value="#{etudiantEJB.etudiant.nom}" a:placeholder="Votre Nom: "
+			validatorMessage="Entrez votre nom" rendered="true"/>
+				
+			<h:message for="username2"/><br/>-
+			<p:outputLabel for="username2" styleClass="block">Prenom</p:outputLabel>
+			<p:inputText id="username2" styleClass="block" value="#{etudiantEJB.etudiant.prenom}" a:placeholder="Votre Prénom: "
+			validatorMessage="Entrez votre Prenom" required="true"/>
+			
+			<h:message for="dateNais"/><br/>
+			<p:outputLabel for="dateNais" styleClass="block">Date de Naissance</p:outputLabel>
+			
+			<p:calendar id="dateNais" value="#{etudiantEJB.date}" required="true" a:placeholder="Votre date de naissance"
+			pattern="yyyy-MM-dd" mode="popup" showOn="button" validatorMessage="Entrez votre date de naissance">
+			
+			</p:calendar>
+			<h:commandButton action="#{etudiantEJB.modifEtudiant()}" value="modifier" />
+		
+		</h:panelGrid>
+		<br/>
+	</h:form>
+	</div>
+	</div>
+</h:body>
+</html>

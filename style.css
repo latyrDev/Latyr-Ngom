@@ -1,0 +1,9 @@
+@charset "ISO-8859-1";
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block; /* ou display: initial; */
+}
